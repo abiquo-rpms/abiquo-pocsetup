@@ -1,8 +1,8 @@
 %define abiquo_basedir /opt/abiquo
 
 Name:     abiquo-pocsetup
-Version: 1.7
-Release:  6%{?dist}%{?buildstamp}
+Version:  1.7.5
+Release:  1%{?dist}%{?buildstamp}
 Summary:  Abiquo POC Setup Metapackage
 Group:    Development/System 
 License:  Multiple 
@@ -11,6 +11,7 @@ Source0:  README
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires: dhcp nfs-utils samba abiquo-server abiquo-remote-services abiquo-v2v abiquo-api abiquo-cloud-node
 Obsoletes: abiquo-16-pocsetup
+BuildArch: noarch
 
 %description
 Next Generation Cloud Management Solution
@@ -31,6 +32,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 # Add dhcpd conf
+cp /etc/dhcpd.conf /etc/dhcpd.conf.bak
 cat > /etc/dhcpd.conf <<EOF
 ddns-update-style interim;
 
@@ -46,6 +48,7 @@ subnet 0.0.0.0 netmask 0.0.0.0 {
 EOF
 
 #  Add samba conf
+cp /etc/samba/smb.conf /etc/samba/smb.conf.bak
 cat > /etc/samba/smb.conf <<EOF
 
 [global]
@@ -74,6 +77,7 @@ locking = yes
 
 EOF
 
+cp /etc/exports /etc/exports.bak
 cat > /etc/exports <<EOF
 /opt/vm_repository *(rw,no_root_squash,subtree_check,insecure)
 EOF
@@ -83,6 +87,11 @@ EOF
 %doc %{_docdir}/%{name}/README
 
 %changelog
+* Thu Mar 17 2011 Sergio Rubio <srubio@abiquo.com> - 1.7.5-1
+- version bump
+- backup system config files before overwriting them
+- set buildarch to noarch
+
 * Tue Jan 25 2011 Sergio Rubio <srubio@abiquo.com> - 1.7-6
 - remove create-vlans script
 
