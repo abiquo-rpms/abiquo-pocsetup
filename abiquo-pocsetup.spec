@@ -1,7 +1,7 @@
 %define abiquo_basedir /opt/abiquo
 
 Name:     abiquo-pocsetup
-Version:  1.7.5
+Version:  1.8
 Release:  1%{?dist}%{?buildstamp}
 Summary:  Abiquo POC Setup Metapackage
 Group:    Development/System 
@@ -87,6 +87,9 @@ EOF
 %doc %{_docdir}/%{name}/README
 
 %changelog
+* Mon May 30 2011 Sergio Rubio <srubio@abiquo.com> - 1.8-1
+- updated to 1.8
+
 * Thu Mar 17 2011 Sergio Rubio <srubio@abiquo.com> - 1.7.5-1
 - version bump
 - backup system config files before overwriting them
