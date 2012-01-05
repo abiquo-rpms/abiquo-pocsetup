@@ -1,7 +1,7 @@
 %define abiquo_basedir /opt/abiquo
 
 Name:     abiquo-pocsetup
-Version:  1.8
+Version:  2.0
 Release:  1%{?dist}%{?buildstamp}
 Summary:  Abiquo POC Setup Metapackage
 Group:    Development/System 
@@ -9,7 +9,7 @@ License:  Multiple
 URL:      http://www.abiquo.com 
 Source0:  README 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-Requires: dhcp nfs-utils samba abiquo-server abiquo-remote-services abiquo-v2v abiquo-api abiquo-cloud-node
+Requires: dhcp nfs-utils samba abiquo-server abiquo-remote-services abiquo-v2v abiquo-api 
 Obsoletes: abiquo-16-pocsetup
 BuildArch: noarch
 
@@ -37,6 +37,8 @@ cat > /etc/dhcpd.conf <<EOF
 ddns-update-style interim;
 
 omapi-port 7911;
+option classless-static-routes code 121 = array of integer 8;
+option ms-classless-static-routes code 249 = array of integer 8;
 
 subnet 0.0.0.0 netmask 0.0.0.0 {
 	default-lease-time 60000;
@@ -87,6 +89,11 @@ EOF
 %doc %{_docdir}/%{name}/README
 
 %changelog
+* Mon Dec 19 2011 Sergio Rubio <srubio@abiquo.com> - 2.0-1
+- bumped version to 2.0
+- Added new dhcpd.conf options
+- Remove abiquo-cloud-node dep
+
 * Mon May 30 2011 Sergio Rubio <srubio@abiquo.com> - 1.8-1
 - updated to 1.8
 
